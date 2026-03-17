@@ -12,7 +12,7 @@ def main():
     prolog_file="prolog/pokemon_game.pl"
         
     gui = PokemonGUI(
-        prolog_file=prolog_file, 
+        prolog_file=prolog_file,
         starter_id=starter
     )
 

@@ -7,3 +7,7 @@ player_starts(0,0).
 % TO DO
 next_rooms(X,Y,Rooms) :-
     route(M).
+vizinhos():-
+    findall(
+
+    ).

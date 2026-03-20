@@ -11,9 +11,12 @@ inside_limits(X,Y) :-
     Y >= 0, Y <= 4.
 
 isneighbor(X,Y,X1,Y1) :-
-    (X1 is X + 1, Y1 is Y);
-    (X1 is X - 1, Y1 is Y);
-    (X1 is X, Y1 is Y + 1);
+    (X1 is X + 1, Y1 is Y).
+isneighbor(X,Y,X1,Y1) :-
+    (X1 is X - 1, Y1 is Y).
+isneighbor(X,Y,X1,Y1) :-
+    (X1 is X, Y1 is Y + 1).
+isneighbor(X,Y,X1,Y1) :-
     (X1 is X, Y1 is Y - 1).
 
 next_rooms(X,Y,Rooms) :-
@@ -32,8 +35,8 @@ vizinhos(X,Y,M,Rooms) :-
         Rooms
     ).
 
-    elemento_indice(0, [H|_], H).
-    elemento_indice(N, [_|T], Elem) :-
-        N > 0,
-        N1 is N - 1,
-        elemento_indice(N1, T, Elem).
+elemento_indice(0, [H|_], H).
+elemento_indice(N, [_|T], Elem) :-
+    N > 0,
+    N1 is N - 1,
+    elemento_indice(N1, T, Elem).

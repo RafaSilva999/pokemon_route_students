@@ -32,8 +32,8 @@ vizinhos(X,Y,M,Rooms) :-
         Rooms
     ).
 
-    elemento_indice(0, [H|_], H).
-    elemento_indice(N, [_|T], Elem) :-
+elemento_indice(0, [H|_], H).
+elemento_indice(N, [_|T], Elem) :-
         N > 0,
         N1 is N - 1,
         elemento_indice(N1, T, Elem).

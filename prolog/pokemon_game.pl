@@ -5,14 +5,11 @@
 player_starts(0,0).
 
 % TO DO~
-elemento_indice(0, [H|_], H).
-elemento_indice(N, [_|T], Elem) :-
-    N > 0,
-    N1 is N - 1,
-    elemento_indice(N1, T, Elem).
-
-matrix_rows(M, R) :- length(M, R).
-matrix_cols(M, C) :- M = [Row|_], length(Row, C).
+matrix_rows(M, R) :- 
+    length(M, R).
+matrix_cols(M, C) :- 
+    M = [Row|_], 
+    length(Row, C).
  
 inside_limits(X, Y, Rows, Cols) :-
     X >= 0, X =< Rows - 1,
@@ -26,7 +23,7 @@ isneighbor(X,Y,X1,Y1) :-
     (Y1 is Y + 1).
 isneighbor(X,Y,X1,Y1) :-
     (Y1 is Y - 1).
- 
+
 next_rooms(X, Y, Rooms) :-
     route(M),
     matrix_rows(M, Rows),
@@ -43,3 +40,8 @@ next_rooms(X, Y, Rooms) :-
         ),
         Rooms
     ).
+elemento_indice(0, [H|_], H).
+elemento_indice(N, [_|T], Elem) :-
+    N > 0,
+    N1 is N - 1,
+    elemento_indice(N1, T, Elem).

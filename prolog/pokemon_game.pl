@@ -40,8 +40,17 @@ next_rooms(X, Y, Rooms) :-
         ),
         Rooms
     ).
+<<<<<<< HEAD
 elemento_indice(0, [H|_], H).
 elemento_indice(N, [_|T], Elem) :-
     N > 0,
     N1 is N - 1,
     elemento_indice(N1, T, Elem).
+=======
+
+elemento_indice(0, [H|_], H).
+elemento_indice(N, [_|T], Elem) :-
+        N > 0,
+        N1 is N - 1,
+        elemento_indice(N1, T, Elem).
+>>>>>>> 96afcdea854c3bbe423567ab07386498ab95e06f

@@ -5,24 +5,35 @@
 player_starts(0,0).
 
 % TO DO~
-matrix_rows(M, R) :-
-    length(M, R).
-matrix_cols(M, C) :-
-    M = [Row|_],
-    length(Row, C).
+%matrix_rows(M, R) :-
+%    length(M, R).
+%matrix_cols(M, C) :-
+%    M = [Row|_],
+%    length(Row, C).
 
-inside_limits(X, Y, Rows, Cols) :-
-    X >= 0, X =< Rows - 1,
-    Y >= 0, Y =< Cols - 1.
+%inside_limits(X, Y, Rows, Cols) :-
+%    X >= 0, X =< Rows - 1,
+%    Y >= 0, Y =< Cols - 1.
+
+inside_limits(X,Y) :-
+    X >= 0, X =< 4,
+    Y >= 0, Y =< 4.
+
+%isneighbor(X,Y,X1,Y1) :-
+%    (X1 is X + 1,).
+%isneighbor(X,Y,X1,Y1) :-
+%    (X1 is X - 1).
+%isneighbor(X,Y,X1,Y1) :-
+%    (Y1 is Y + 1).
+%isneighbor(X,Y,X1,Y1) :-
+%    (Y1 is Y - 1).
+
 
 isneighbor(X,Y,X1,Y1) :-
-    (X1 is X + 1,).
-isneighbor(X,Y,X1,Y1) :-
-    (X1 is X - 1).
-isneighbor(X,Y,X1,Y1) :-
-    (Y1 is Y + 1).
-isneighbor(X,Y,X1,Y1) :-
-    (Y1 is Y - 1).
+    (X1 is X + 1, Y1 is Y);
+    (X1 is X - 1, Y1 is Y);
+    (X1 is X, Y1 is Y + 1);
+    (X1 is X, Y1 is Y - 1).
 
 next_rooms(X, Y, Rooms) :-
     route(M),

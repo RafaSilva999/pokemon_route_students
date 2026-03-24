@@ -33,10 +33,25 @@ class PokemonGame:
     # --------------------------------
 
     def total_attack(self, attacker_types, defender_types):
-
+        best_eff = 1.0
         # TO DO
+        for atck_type in attacker_types:
+            curr_total = 1.0
+            
+            for def_type in defender_types:
+                
+                result = list(f"attack({atck_type}, {def_type}, Effect)")
+                
+                if result:
+                    eff_val=float(result[0]['Effect'])
+                    curr_total *= eff_val
+                else:
+                    curr_total *= 1.0
+                    
+        if curr_total > best_eff:
+            best_eff = curr_total
 
-        return 0
+        return best_eff
 
     # --------------------------------
 
@@ -145,5 +160,3 @@ class PokemonGame:
 
     
     # --------------------------------
-
-   

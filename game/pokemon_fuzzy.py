@@ -133,7 +133,7 @@ lvl_diff['much_high'] = np.array([
 effect['immune'] = fuzz.trapmf(effect.universe, [0, 0, 0, 0.15])
 effect['very_weak'] = fuzz.trimf(effect.universe, [0.1, 0.25, 0.45])
 effect['weak'] = fuzz.trimf(effect.universe, [0.3, 0.5, 0.8])
-effect['neutral'] = fuzz.trimf(effect.universe, [0.7, 1.0, 1.4])
+effect['neutral'] = fuzz.trimf(effect.universe, [0.7, 1.0, 1.4])       
 effect['strong'] = fuzz.trimf(effect.universe, [1.2, 2.0, 2.8])
 effect['very_strong'] = fuzz.trapmf(effect.universe, [2.5, 3.5, 4.0, 4.0])
 
@@ -141,7 +141,7 @@ probabilidade['very_low'] = fuzz.trapmf(probabilidade.universe, [0, 0, 0.1, 0.25
 probabilidade['low'] = fuzz.trimf(probabilidade.universe, [0.15, 0.3, 0.45])
 probabilidade['medium'] = fuzz.trimf(probabilidade.universe, [0.35, 0.5, 0.65])
 probabilidade['high'] = fuzz.trimf(probabilidade.universe, [0.55, 0.70, 0.85])
-probabilidade['very_high'] = fuzz.trapmf(probabilidade.universe, [0.7, 0.9, 1.0, 1.0])
+probabilidade['very_high'] = fuzz.trapmf(probabilidade.universe, [0.7, 0.9, 1.0, 1.0])   #/---
 
 
 
@@ -182,13 +182,36 @@ rule24 = ctrl.Rule(effect['very_strong'] & lvl_diff['equal'], probabilidade['ver
 rule25 = ctrl.Rule(effect['very_strong'] & lvl_diff['high'], probabilidade['very_high'])
 rule26 = ctrl.Rule(effect['very_strong'] & lvl_diff['much_high'], probabilidade['very_high'])
 
+rules = ctrl.ControlSystem([rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9, rule10, rule11, rule12, rule13, rule14, rule15, rule16, rule17, rule18, rule19, rule20, rule21, rule22, rule23, rule24, rule25, rule26])
+prob_ctrl = ctrl.ControlSystemSimulation(rules)
 
 
 def calculate_prob(level_input, effect_input):
-    lvl_pos = np.where(lvl_diff.universe == level_input)[0][0]
-    eff_pos = np.where(effect.universe == effect_input)[0][0]
+    try:
+        prob_ctrl.input['lvl_diff'] = level_input
+        prob_ctrl.input['effect'] = effect_input
+        prob_ctrl.compute()
+        print(f"Calculated probability: {prob_ctrl.output['probabilidade']:.2f}")
+        return float(prob_ctrl.output['probabilidade'])
     
+    except Exception as e:
+        print(f"Error calculating probability: {e}")
+        return 0.5
     
-    return 1
+    """
+    try:
+        lvl_pos= np.where(lvl_diff.universe == level_input)[0][0]
+        effect_pos = np.where(effect.universe == effect_input)[0][0]
+    except Exception as e:
+        print(f"Error calculating probability: {e}")
+        return 0.5
+    prob_ctrl = ctrl.ControlSystemSimulation(rules)
+    prob_ctrl.input['lvl_diff'] = level_input
+    prob_ctrl.input['effect'] = effect_input
+    
+    prob_ctrl.compute()
+    print(f"Calculated probability: {prob_ctrl.output['probabilidade']:.2f}")
+    return float(prob_ctrl.output['probabilidade'])
+    """
 
 

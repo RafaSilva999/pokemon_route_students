@@ -13,6 +13,8 @@ effect = ctrl.Antecedent(np.arange(0, 4.1, 0.1), 'effect')
 #Consequent
 probabilidade = ctrl.Consequent(np.arange(0, 1.0, 0.01), 'probabilidade')
 
+
+#lvl_diff["much_low"] = fuzz.trapmf(lvl_diff.universe, [-9, -9, -6, -4])
 lvl_diff['much_low'] = np.array([
     1.0, # -9
     1.0, # -8
@@ -35,6 +37,7 @@ lvl_diff['much_low'] = np.array([
     0.0#9
     ])
 
+#lvl_diff['low'] = fuzz.trapmf(lvl_diff.universe, [-7, -5, -3, -1])
 lvl_diff['low'] = np.array([
     0.0, # -9
     0.0, # -8
@@ -57,6 +60,7 @@ lvl_diff['low'] = np.array([
     0.0#9
 ])
 
+#lvl_diff['equal'] = fuzz.trapmf(lvl_diff.universe, [-3, -1, 1, 3])
 lvl_diff['equal'] = np.array([
     0.0, # -9
     0.0, # -8
@@ -79,6 +83,7 @@ lvl_diff['equal'] = np.array([
     0.0#9
 ])
 
+#lvl_diff['high'] = fuzz.trapmf(lvl_diff.universe, [0, 2, 5, 7])
 lvl_diff['high'] = np.array([
     0.0, # -9
     0.0, # -8
@@ -101,6 +106,7 @@ lvl_diff['high'] = np.array([
     0.0#9
 ])
 
+#lvl_diff['much_high'] = fuzz.trapmf(lvl_diff.universe, [4, 6, 9, 9])
 lvl_diff['much_high'] = np.array([
     0.0, # -9
     0.0, # -8

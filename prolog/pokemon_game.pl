@@ -5,16 +5,16 @@
 player_starts(0,0).
 
 % TO DO~
-matrix_rows(M, R) :- 
+matrix_rows(M, R) :-
     length(M, R).
-matrix_cols(M, C) :- 
-    M = [Row|_], 
+matrix_cols(M, C) :-
+    M = [Row|_],
     length(Row, C).
- 
+
 inside_limits(X, Y, Rows, Cols) :-
     X >= 0, X =< Rows - 1,
     Y >= 0, Y =< Cols - 1.
- 
+
 isneighbor(X,Y,X1,Y1) :-
     (X1 is X + 1,).
 isneighbor(X,Y,X1,Y1) :-

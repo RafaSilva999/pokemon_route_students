@@ -31,25 +31,22 @@ class PokemonGame:
         self.number_of_pokemons = 25
 
     # --------------------------------
-
+    
     def total_attack(self, attacker_types, defender_types):
-        best_eff = 1.0
-        # TO DO
+        best_eff = 0.0
+    
         for atck_type in attacker_types:
             curr_total = 1.0
-            
             for def_type in defender_types:
-                
-                result = list(f"attack({atck_type}, {def_type}, Effect)")
-                
+                query_str = f"attack({atck_type}, {def_type}, Effect)"
+                result = list(self.prolog.query(query_str))
+            
                 if result:
-                    eff_val=float(result[0]['Effect'])
+                    eff_val = float(result[0]['Effect'])
                     curr_total *= eff_val
-                else:
-                    curr_total *= 1.0
-                    
-        if curr_total > best_eff:
-            best_eff = curr_total
+        
+            if curr_total > best_eff:
+                best_eff = curr_total
 
         return best_eff
 

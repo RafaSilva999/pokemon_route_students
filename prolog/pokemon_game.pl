@@ -30,20 +30,21 @@ inside_limits(X,Y) :-
 
 
 isneighbor(X,Y,X1,Y1) :-
-    (X1 is X + 1, Y1 is Y);
-    (X1 is X - 1, Y1 is Y);
-    (X1 is X, Y1 is Y + 1);
+    (X1 is X + 1, Y1 is Y).
+isneighbor(X,Y,X1,Y1) :-
+    (X1 is X - 1, Y1 is Y).
+isneighbor(X,Y,X1,Y1) :-
+    (X1 is X, Y1 is Y + 1).
+isneighbor(X,Y,X1,Y1) :-
     (X1 is X, Y1 is Y - 1).
 
 next_rooms(X, Y, Rooms) :-
     route(M),
-    matrix_rows(M, Rows),
-    matrix_cols(M, Cols),
     findall(
         [Id, Name, Level, NX, NY, Types],
         (
             isneighbor(X, Y, NX, NY),
-            inside_limits(NX, NY, Rows, Cols),
+            inside_limits(NX, NY),
             elemento_indice(NX, M, Linha),
             elemento_indice(NY, Linha, (Id, Level)),
             Id \= 0,

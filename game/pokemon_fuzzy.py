@@ -11,7 +11,7 @@ lvl_diff = ctrl.Antecedent(np.arange(-9, 10, 1), 'lvl_diff')
 effect = ctrl.Antecedent(np.arange(0, 4.1, 0.1), 'effect')
 
 #Consequent
-probabilidade = ctrl.Consequent(np.arange(0, 1.0, 0.01), 'probabilidade')
+probabilidade = ctrl.Consequent(np.arange(0, 1.01, 0.01), 'probabilidade')
 
 
 #lvl_diff["much_low"] = fuzz.trapmf(lvl_diff.universe, [-9, -9, -6, -4])
@@ -182,21 +182,50 @@ rule24 = ctrl.Rule(effect['very_strong'] & lvl_diff['equal'], probabilidade['ver
 rule25 = ctrl.Rule(effect['very_strong'] & lvl_diff['high'], probabilidade['very_high'])
 rule26 = ctrl.Rule(effect['very_strong'] & lvl_diff['much_high'], probabilidade['very_high'])
 
-rules = ctrl.ControlSystem([rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9, rule10, rule11, rule12, rule13, rule14, rule15, rule16, rule17, rule18, rule19, rule20, rule21, rule22, rule23, rule24, rule25, rule26])
-prob_ctrl = ctrl.ControlSystemSimulation(rules)
+rules = [rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9, rule10, rule11, rule12, rule13, rule14, rule15, rule16, rule17, rule18, rule19, rule20, rule21, rule22, rule23, rule24, rule25, rule26]
+
 
 
 def calculate_prob(level_input, effect_input):
-    try:
-        prob_ctrl.input['lvl_diff'] = level_input
-        prob_ctrl.input['effect'] = effect_input
-        prob_ctrl.compute()
-        print(f"Calculated probability: {prob_ctrl.output['probabilidade']:.2f}")
-        return float(prob_ctrl.output['probabilidade'])
-    
-    except Exception as e:
-        print(f"Error calculating probability: {e}")
+    #p1
+    lvl_pos = np.where(lvl_diff.universe == level_input)[0][0]
+    eff_pos = np.where(effect.universe == effect_input)[0][0]
+    #p2
+    lvls_diffs = {
+        label: lvl_diff[label].mf[lvl_pos]
+        for label in ['much_low', 'low', 'equal', 'high', 'much_high']
+    }
+    effects = {
+        label: effect[label].mf[eff_pos]
+        for label in ['immune', 'very_weak', 'weak', 'neutral', 'strong', 'very_strong']
+    }
+    #p3 e p4
+    aggregated = np.zeros_like(probabilidade.universe)
+
+    for rule in rules:
+        conditions = rule.antecedent_terms
+        conclusion = rule.consequent[0].term
+
+        member = []
+        for term in conditions:
+            var_label  = term.parent.label
+            term_label = term.label
+            if var_label == 'lvl_diff':
+                member.append(lvls_diffs[term_label])
+            else:
+                member.append(effects[term_label])
+        rule_strength = min(member) if member else 0.0
+ 
+        if rule_strength > 0:
+            contribution = np.fmin(rule_strength, conclusion.mf)
+            aggregated = np.fmax(aggregated, contribution)
+ 
+    #5
+    if np.sum(aggregated) == 0:
         return 0.5
+ 
+    result = fuzz.defuzz(probabilidade.universe, aggregated, 'centroid')
+    return float(np.clip(result, 0.0, 1.0))
     
     """
     try:

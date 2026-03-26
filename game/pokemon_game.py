@@ -38,12 +38,14 @@ class PokemonGame:
         for atck_type in attacker_types:
             curr_total = 1.0
             for def_type in defender_types:
-                query_str = f"attack({atck_type}, {def_type}, Effect)"
-                result = list(self.prolog.query(query_str))
+                #query_str = f"attack({atck_type}, {def_type}, Effect)"
+                result = list(self.prolog.query(f"attack({atck_type}, {def_type}, Effect)"))
             
                 if result:
                     eff_val = float(result[0]['Effect'])
                     curr_total *= eff_val
+                else:
+                    curr_total *= 1.0   
         
             if curr_total > best_eff:
                 best_eff = curr_total

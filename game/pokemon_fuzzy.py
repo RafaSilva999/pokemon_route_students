@@ -14,35 +14,12 @@ effect = ctrl.Antecedent(np.arange(0, 4.1, 0.1), 'effect')
 probabilidade = ctrl.Consequent(np.arange(0, 1.01, 0.01), 'probabilidade')
 
 
-#lvl_diff["much_low"] = fuzz.trapmf(lvl_diff.universe, [-9, -9, -6, -4])
-lvl_diff['much_low'] = np.array([
+#lvl_diff['low'] = fuzz.trapmf(lvl_diff.universe, [-7, -5, -3, -1])
+lvl_diff['low'] = np.array([
     1.0, # -9
     1.0, # -8
     1.0, # -7
     1.0, # -6
-    0.5, # -5
-    0.0, # -4
-    0.0, # -3
-    0.0, #  -2
-    0.0,#-1
-    0.0,#0
-    0.0,#1
-    0.0,#2
-    0.0,#3
-    0.0,#4
-    0.0,#5
-    0.0,#6
-    0.0,#7
-    0.0,#8
-    0.0#9
-    ])
-
-#lvl_diff['low'] = fuzz.trapmf(lvl_diff.universe, [-7, -5, -3, -1])
-lvl_diff['low'] = np.array([
-    0.0, # -9
-    0.0, # -8
-    0.0, # -7
-    0.5, # -6
     1.0, # -5
     1.0, # -4
     1.0, # -3
@@ -96,54 +73,28 @@ lvl_diff['high'] = np.array([
     0.0,#-1
     0.0,#0
     0.5,#1
-    1.0,#2
+    0.5,#2
     1.0,#3
     1.0,#4
     1.0,#5
-    0.5,#6
-    0.0,#7
-    0.0,#8
-    0.0#9
+    1.0,#6
+    1.0,
+    1.0,
+    1.0
 ])
 
-#lvl_diff['much_high'] = fuzz.trapmf(lvl_diff.universe, [4, 6, 9, 9])
-lvl_diff['much_high'] = np.array([
-    0.0, # -9
-    0.0, # -8
-    0.0, # -7
-    0.0, # -6
-    0.0, # -5
-    0.0, # -4
-    0.0, # -3
-    0.0, #  -2
-    0.0,#-1
-    0.0,#0
-    0.0,#1
-    0.0,#2
-    0.0,#3
-    0.0,#4
-    0.5,#5
-    1.0,#6
-    1.0,#7
-    1.0,#8
-    1.0#9
-])
 
 #0=imune, 0.25= very_weak, 0.5=fraco, 1.0=neutral, 2.0=strong, 4.0=very_strong
 effect['immune'] = fuzz.trapmf(effect.universe, [0, 0, 0, 0.15])
-effect['very_weak'] = fuzz.trimf(effect.universe, [0.1, 0.25, 0.45])
-effect['weak'] = fuzz.trimf(effect.universe, [0.3, 0.5, 0.8])
-effect['neutral'] = fuzz.trimf(effect.universe, [0.7, 1.0, 1.4])       
-effect['strong'] = fuzz.trimf(effect.universe, [1.2, 2.0, 2.8])
-effect['very_strong'] = fuzz.trapmf(effect.universe, [2.5, 3.5, 4.0, 4.0])
+effect['weak'] = fuzz.trimf(effect.universe, [0.1, 0.5, 0.7])
+effect['neutral'] = fuzz.trimf(effect.universe, [0.7, 1.0, 1.4])
+effect['strong'] = fuzz.trapf(effect.universe, [1.5, 2.0, 4.0, 4.0])
 
-probabilidade['very_low'] = fuzz.trapmf(probabilidade.universe, [0, 0, 0.1, 0.25])
+
 probabilidade['low'] = fuzz.trimf(probabilidade.universe, [0.15, 0.3, 0.45])
 probabilidade['medium'] = fuzz.trimf(probabilidade.universe, [0.35, 0.5, 0.65])
 probabilidade['high'] = fuzz.trimf(probabilidade.universe, [0.55, 0.70, 0.85])
-probabilidade['very_high'] = fuzz.trapmf(probabilidade.universe, [0.7, 0.9, 1.0, 1.0])   #/---
-
-
+#/---
 
 #immune
 rule1 = ctrl.Rule(effect['immune'], probabilidade['very_low'])

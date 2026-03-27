@@ -38,7 +38,6 @@ class PokemonGame:
         for atck_type in attacker_types:
             curr_total = 1.0
             for def_type in defender_types:
-                #query_str = f"attack({atck_type}, {def_type}, Effect)"
                 result = list(self.prolog.query(f"attack({atck_type}, {def_type}, Effect)"))
             
                 if result:

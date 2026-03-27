@@ -190,6 +190,7 @@ def calculate_prob(level_input, effect_input):
     #p1
     lvl_pos = np.where(lvl_diff.universe == level_input)[0][0]
     eff_pos = np.where(effect.universe == effect_input)[0][0]
+
     #p2
     lvls_diffs = {
         label: lvl_diff[label].mf[lvl_pos]
@@ -199,22 +200,22 @@ def calculate_prob(level_input, effect_input):
         label: effect[label].mf[eff_pos]
         for label in ['immune', 'very_weak', 'weak', 'neutral', 'strong', 'very_strong']
     }
+
     #p3 e p4
     aggregated = np.zeros_like(probabilidade.universe)
-
     for rule in rules:
         conditions = rule.antecedent_terms
         conclusion = rule.consequent[0].term
 
-        member = []
+        membership = []
         for term in conditions:
             var_label  = term.parent.label
             term_label = term.label
             if var_label == 'lvl_diff':
-                member.append(lvls_diffs[term_label])
+                membership.append(lvls_diffs[term_label])
             else:
-                member.append(effects[term_label])
-        rule_strength = min(member) if member else 0.0
+                membership.append(effects[term_label])
+        rule_strength = min(membership) if membership else 0.0
  
         if rule_strength > 0:
             contribution = np.fmin(rule_strength, conclusion.mf)

@@ -15,7 +15,10 @@ class StarterGUI:
         starters = {
             1: "bulbasaur",
             4: "charmander",
-            7: "squirtle"
+            7: "squirtle",
+            25: "pikachu",
+            150: "mewtwo",
+            151: "mew"
         }
 
         tk.Label(self.root, text="Choose your Starter!", font=("Arial", 16)).pack(pady=10)

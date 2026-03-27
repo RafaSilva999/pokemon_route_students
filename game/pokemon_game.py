@@ -45,7 +45,7 @@ class PokemonGame:
                     eff_val = float(result[0]['Effect'])
                     curr_total *= eff_val
                 else:
-                    curr_total *= 1.0   
+                    curr_total *= 1.0
         
             if curr_total > best_eff:
                 best_eff = curr_total
